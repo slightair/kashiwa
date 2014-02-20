@@ -1,0 +1,22 @@
+{
+  "name": "kashiwa",
+  "version": "0.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/slightair/kashiwa.git"
+  },
+  "author": "slightair",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/slightair/kashiwa/issues"
+  },
+  "homepage": "https://github.com/slightair/kashiwa",
+  "devDependencies": {
+    "grunt-contrib-coffee": "^0.10.1",
+    "grunt-contrib-uglify": "^0.3.2",
+    "grunt-contrib-watch": "^0.5.3",
+    "grunt": "^0.4.2",
+    "grunt-bower-task": "^0.3.4"
+  }
+}

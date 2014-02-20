@@ -1,0 +1,39 @@
+{
+  "name": "kashiwa",
+  "version": "0.0.0",
+  "homepage": "https://github.com/slightair/kashiwa",
+  "authors": [
+    "slightair <arksutite@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "pixi": "~1.5.1",
+    "bootstrap": "~3.1.1"
+  },
+  "exportsOverride": {
+    "bootstrap": {
+      "js": "./dist/js/bootstrap.min.js",
+      "css": "./dist/css/bootstrap.min.css"
+    },
+    "jquery": {
+      "js": [
+        "./dist/jquery.min.js",
+        "./dist/jquery.min.map"
+      ]
+    },
+    "pixi": {
+      "js": [
+        "./bin/pixi.js"
+      ]
+    }
+  }
+}
