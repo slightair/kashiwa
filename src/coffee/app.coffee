@@ -1,3 +1,18 @@
+class World extends PIXI.DisplayObjectContainer
+  constructor: (w, h) ->
+    super
+
+    @mushroom = new PIXI.Sprite(PIXI.Texture.fromImage("/img/mushroom.png"))
+    @mushroom.anchor.x = 0.5
+    @mushroom.anchor.y = 0.5
+    @mushroom.position.x = w / 2
+    @mushroom.position.y = h / 2
+
+    @addChild(@mushroom)
+
+  update: ->
+    @mushroom.rotation -= 0.1
+
 $ ->
   width = 640
   height = 480
@@ -7,18 +22,13 @@ $ ->
 
   $('#world-view').append(renderer.view)
 
-  mushroom = new PIXI.Sprite(PIXI.Texture.fromImage("/img/mushroom.png"))
-  mushroom.anchor.x = 0.5
-  mushroom.anchor.y = 0.5
-  mushroom.position.x = width / 2
-  mushroom.position.y = height / 2
+  world = new World(width, height)
+  stage.addChild(world)
 
-  stage.addChild(mushroom)
-
-  animate = ->
+  animate = =>
     requestAnimationFrame(animate)
 
-    mushroom.rotation += 0.1
+    world.update()
 
     renderer.render(stage)
 
