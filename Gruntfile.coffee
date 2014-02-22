@@ -7,18 +7,25 @@ module.exports = (grunt) ->
     coffee:
       compile:
         options:
-          join: true
           sourceMap: false
-        files:
-          'src/js/kashiwa.js': [
-            'src/coffee/app.coffee'
-          ]
+          bare: true
+        files: [
+          expand: true
+          cwd: 'src/coffee'
+          src: ['**/*.coffee']
+          dest: 'src/js/compiled'
+          ext: '.js'
+        ]
+    browserify:
+      dist:
+        src: 'src/js/compiled/**/*.js'
+        dest: 'src/js/kashiwa.js'
     uglify:
       compile:
         files: [
           expand: true
           cwd: 'src/js/'
-          src: ['**/*.js']
+          src: 'kashiwa.js'
           dest: 'public/js/'
           ext: '-min.js'
         ]
@@ -35,6 +42,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
   grunt.loadNpmTasks 'grunt-bower-task'
-  grunt.registerTask 'build', ['coffee', 'uglify']
+  grunt.loadNpmTasks 'grunt-browserify'
+  grunt.registerTask 'build', ['coffee', 'browserify', 'uglify']
   grunt.registerTask 'default', ['watch']
   return
