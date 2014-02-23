@@ -1,16 +1,22 @@
+Cell = require './cell'
+
 class World extends PIXI.DisplayObjectContainer
-  constructor: (w, h) ->
+  constructor: (@width, @height) ->
     super
 
-    @mushroom = new PIXI.Sprite(PIXI.Texture.fromImage("/img/mushroom.png"))
-    @mushroom.anchor.x = 0.5
-    @mushroom.anchor.y = 0.5
-    @mushroom.position.x = w / 2
-    @mushroom.position.y = h / 2
+    cellSize = 32
+    numLineCells = 12
+    numLines = 12
 
-    @addChild(@mushroom)
+    @cells = for i in [0...(numLineCells * numLines)]
+      cell = new Cell(cellSize, cellSize)
+      cell.position.x = cellSize * (i % numLineCells)
+      cell.position.y = cellSize * Math.floor(i / numLineCells)
+      cell
+
+    @addChild cell for cell in @cells
 
   update: ->
-    @mushroom.rotation -= 0.1
+    cell.update() for cell in @cells
 
 module.exports = World

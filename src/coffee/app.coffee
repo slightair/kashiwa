@@ -1,22 +1,20 @@
-World = require("./world")
+World = require './world'
 
-$ ->
-  width = 640
-  height = 480
+class App
+  constructor: (viewElementID, @width, @height) ->
+    @stage = new PIXI.Stage 'black'
+    @renderer = PIXI.autoDetectRenderer(@width, @height)
+    $(viewElementID).append @renderer.view
 
-  stage = new PIXI.Stage('black')
-  renderer = PIXI.autoDetectRenderer(width, height)
+  run: ->
+    @world = new World(@width, @height)
+    @stage.addChild @world
 
-  $('#world-view').append(renderer.view)
+    requestAnimationFrame @animate
 
-  world = new World(width, height)
-  stage.addChild(world)
+  animate: =>
+    requestAnimationFrame @animate
+    @world.update()
+    @renderer.render @stage
 
-  animate = =>
-    requestAnimationFrame(animate)
-
-    world.update()
-
-    renderer.render(stage)
-
-  requestAnimationFrame(animate)
+module.exports = App
