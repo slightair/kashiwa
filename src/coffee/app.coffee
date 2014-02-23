@@ -7,10 +7,20 @@ class App
     $(viewElementID).append @renderer.view
 
   run: ->
-    @world = new World(@width, @height)
-    @stage.addChild @world
+    @loadSpriteSheets =>
+      @world = new World(@width, @height)
+      @stage.addChild @world
 
-    requestAnimationFrame @animate
+      requestAnimationFrame @animate
+
+  loadSpriteSheets: (onComplete) ->
+    assets = [
+      "resources/mapchip.json",
+      "resources/mushroom.json"
+    ]
+    loader = new PIXI.AssetLoader(assets)
+    loader.onComplete = onComplete
+    loader.load()
 
   animate: =>
     requestAnimationFrame @animate
