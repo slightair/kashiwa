@@ -17,9 +17,14 @@ class CellView extends PIXI.DisplayObjectContainer
     background = PIXI.Sprite.fromFrame "grass1.png"
     @addChild background
 
+    @nutrientCounter = new PIXI.Text(@cell.nutrient, font:'12px Arial')
+    @addChild @nutrientCounter
+
     @prevCellStatus = @cell.status
 
   update: ->
+    @nutrientCounter.setText "#{@cell.nutrient}"
+
     currentStatus = @cell.status
 
     if @prevCellStatus == Cell.Status.None && currentStatus == Cell.Status.Emerged

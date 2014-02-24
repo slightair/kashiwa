@@ -11,9 +11,14 @@ class WorldScene
     @worldView.layout()
     @stage.addChild @worldView
 
+    @generationCounter = new PIXI.Text("gen:#{@world.generation}", font:'12px Arial', fill: 'white')
+    @generationCounter.position.x = 400
+    @stage.addChild @generationCounter
+
     @world.start()
 
   update: ->
+    @generationCounter.setText "gen:#{@world.generation}"
     @worldView.update()
 
   clickedCell: (index) ->

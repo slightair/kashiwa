@@ -5,10 +5,12 @@ class Cell
 
   constructor: (@index) ->
     @status = Cell.Status.None
+    @nutrient = Math.floor(Math.random() * 100)
 
   spawn: (objectIndex) ->
     @objectIndex = objectIndex
     @status = Cell.Status.Emerged
+    @nutrient -= 30
 
   crop: ->
     @objectIndex = null
