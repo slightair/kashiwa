@@ -1,4 +1,5 @@
 Cell = require './cell'
+CreatureDictionary = require '../creatures'
 
 class World
   @Width: 12
@@ -9,6 +10,8 @@ class World
       new Cell(i)
     @generation = 0
 
+    @bornConditions = @makeBornConditions()
+
   start: ->
     @timer = setInterval @tick, 100
 
@@ -18,14 +21,36 @@ class World
   tick: =>
     for cell in @cells
       if cell.status == Cell.Status.None
-        if cell.nutrient >= 30
-          objectIndex = Math.floor(Math.random() * 6) + 1
-          cell.spawn(objectIndex)
+        for cond in @bornConditions
+          if cell.nutrient >= cond[1]
+            cell.spawn cond[0]
+            break
     @generation += 1
 
   affectCell: (cellIndex) ->
     targetCell = @cells[cellIndex]
 
-    targetCell.crop() if targetCell.status == Cell.Status.Emerged
+    if targetCell.status == Cell.Status.Emerged
+      info = CreatureDictionary[targetCell.creatureID]
+      targetCell.crop()
+
+      neighbors = @neighbors(cellIndex, info.scatter)
+
+      for index in neighbors
+        cell = @cells[index]
+        cell.nutrient += Math.floor(info.nutrient / neighbors.length)
+
+  makeBornConditions: ->
+    conds = ([id, info.nutrient] for id, info of CreatureDictionary)
+    conds.sort (a, b) -> b[1] - a[1]
+
+  neighbors: (center, sizeName) ->
+    neighbors = []
+
+    switch sizeName
+      when 'medium'
+        neighbors = [1, 2, 3, 4, 5]
+
+    neighbors
 
 module.exports = World

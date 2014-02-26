@@ -1,3 +1,5 @@
+CreatureDictionary = require '../creatures'
+
 class Cell
   @Status:
     None: 1
@@ -5,12 +7,14 @@ class Cell
 
   constructor: (@index) ->
     @status = Cell.Status.None
-    @nutrient = Math.floor(Math.random() * 100)
+    @nutrient = Math.floor(Math.random() * 32)
 
-  spawn: (objectIndex) ->
-    @objectIndex = objectIndex
+  spawn: (creatureID) ->
+    @creatureID = creatureID
     @status = Cell.Status.Emerged
-    @nutrient -= 30
+
+    info = CreatureDictionary[creatureID]
+    @nutrient -= info.nutrient
 
   crop: ->
     @objectIndex = null

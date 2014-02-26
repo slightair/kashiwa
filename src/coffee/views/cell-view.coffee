@@ -1,5 +1,6 @@
 App = require '../app'
 Cell = require '../models/cell'
+CreatureDictionary = require '../creatures'
 
 class CellView extends PIXI.DisplayObjectContainer
   @Width: 32
@@ -28,7 +29,9 @@ class CellView extends PIXI.DisplayObjectContainer
     currentStatus = @cell.status
 
     if @prevCellStatus == Cell.Status.None && currentStatus == Cell.Status.Emerged
-      @object = PIXI.Sprite.fromFrame "mushroom#{@cell.objectIndex}.png"
+      info = CreatureDictionary[@cell.creatureID]
+
+      @object = PIXI.Sprite.fromFrame info.image
       @object.anchor.x = 0.5
       @object.anchor.y = 0.5
       @object.position.x = CellView.Width / 2
