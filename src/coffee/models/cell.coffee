@@ -17,7 +17,12 @@ class Cell
     @nutrient -= info.nutrient
 
   crop: ->
-    @objectIndex = null
+    @creatureID = null
     @status = Cell.Status.None
+
+  allNutrient: ->
+    nutrient = @nutrient
+    nutrient += CreatureDictionary[@creatureID].nutrient if @creatureID
+    nutrient
 
 module.exports = Cell

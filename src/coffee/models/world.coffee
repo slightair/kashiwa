@@ -6,8 +6,8 @@ class World
   @Height: 12
 
   constructor: ->
-    @cells = for i in [0...(World.Width * World.Height)]
-      new Cell(i)
+    @cells = (new Cell i for i in [0...(World.Width * World.Height)])
+
     @generation = 0
 
     @bornConditions = @makeBornConditions()
@@ -39,6 +39,11 @@ class World
       for index in neighbors
         cell = @cells[index]
         cell.nutrient += Math.floor(info.nutrient / neighbors.length)
+
+  allNutrients: ->
+    sum = 0
+    sum += cell.allNutrient() for cell in @cells
+    sum
 
   makeBornConditions: ->
     conds = ([id, info.nutrient] for id, info of CreatureDictionary)

@@ -11,17 +11,20 @@ class WorldScene
     @worldView.layout()
     @stage.addChild @worldView
 
-    @generationCounter = new PIXI.Text("gen:#{@world.generation}", font:'12px Arial', fill: 'white')
-    @generationCounter.position.x = 400
-    @stage.addChild @generationCounter
+    @debugCounter = new PIXI.Text(@debugCounterText(), font:'12px Arial', fill: 'white')
+    @debugCounter.position.x = 400
+    @stage.addChild @debugCounter
 
     @world.start()
 
   update: ->
-    @generationCounter.setText "gen:#{@world.generation}"
+    @debugCounter.setText @debugCounterText()
     @worldView.update()
 
   clickedCell: (index) ->
     @world.affectCell(index)
+
+  debugCounterText: ->
+    "gen:#{@world.generation}\nnutrients:#{@world.allNutrients()}"
 
 module.exports = WorldScene
