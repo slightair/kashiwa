@@ -45,12 +45,30 @@ class World
     conds.sort (a, b) -> b[1] - a[1]
 
   neighbors: (center, sizeName) ->
-    neighbors = []
-
     switch sizeName
       when 'medium'
-        neighbors = [1, 2, 3, 4, 5]
+        @mediumNeighbors center
+      else
+        []
 
-    neighbors
+  mediumNeighbors: (center) ->
+    if center == 0
+      [center + 1, center + World.Width]
+    else if center == World.Width - 1
+      [center - 1, center + World.Width]
+    else if center == World.Width * (World.Height - 1)
+      [center - World.Width, center + 1]
+    else if center == World.Width * World.Height - 1
+      [center - World.Width, center - 1]
+    else if center < World.Width
+      [center - 1, center + 1, center + World.Width]
+    else if center > World.Width * (World.Height - 1)
+      [center - 1, center + 1, center - World.Width]
+    else if center % World.Width == 0
+      [center - World.Width, center + 1, center + World.Width]
+    else if center % World.Width == (World.Width - 1)
+      [center - World.Width, center - 1, center + World.Width]
+    else
+      [center - World.Width, center + 1, center + World.Width, center - 1]
 
 module.exports = World
