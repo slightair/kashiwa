@@ -14,11 +14,29 @@ class App
     attachTo: (viewElementID) ->
       $(viewElementID).append @renderer.view
 
+    start: ->
+      return unless @worldScene
+      return if @timer
+
+      @timer = setInterval =>
+        @worldScene.world.tick()
+      , 100
+
+    stop: ->
+      clearInterval @timer
+      @timer = null
+
+    tick: ->
+      return unless @worldScene
+      @worldScene.world.tick()
+
+    started: -> !!@timer
+
     run: ->
       @loadSpriteSheets =>
-        worldScene = new WorldScene @stage
+        @worldScene = new WorldScene @stage
 
-        @currentScene = worldScene
+        @currentScene = @worldScene
         @currentScene.layout()
 
         requestAnimationFrame @animate

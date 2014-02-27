@@ -12,12 +12,6 @@ class World
 
     @bornConditions = @makeBornConditions()
 
-  start: ->
-    @timer = setInterval @tick, 100
-
-  stop: ->
-    clearInterval @timer
-
   tick: =>
     for cell in @cells
       if cell.status == Cell.Status.None

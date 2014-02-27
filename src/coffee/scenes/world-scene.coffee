@@ -15,8 +15,6 @@ class WorldScene
     @debugCounter.position.x = 400
     @stage.addChild @debugCounter
 
-    @world.start()
-
   update: ->
     @debugCounter.setText @debugCounterText()
     @worldView.update()
